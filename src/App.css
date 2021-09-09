@@ -1,0 +1,36 @@
+#myNavigation>.row{
+  height: 65px;
+  padding: 13px 30px;
+}
+.logo {
+  width: 40px;
+  height: 40px;
+}
+.floatRight{
+  float: right;
+}
+.right{
+  text-align: right;
+}
+.center{
+  text-align:center !important;
+}
+a, a:hover{
+  text-decoration: none !important;
+  color: inherit !important;
+}
+#myNavigation a {
+  background: cornflowerblue;
+  color: white !important;
+  padding: 4px 17px 5px 17px;
+  border-radius: 27px;
+}
+#myNavigation a.login {
+  background: white;
+  color: black !important;
+  border: solid 1px cornflowerblue;
+  padding: 4px 21px 5px 21px;
+}
+#myNavigation .right {
+  padding-top: 8px;
+}
