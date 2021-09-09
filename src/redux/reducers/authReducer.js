@@ -1,11 +1,6 @@
 import {
   INPUT_CHANGE,
-  REGISTER_SUCCESS,
-  REGISTER_FAILURE,
-  CLEAR_FORM,
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE 
-} from "../actions/types";
+ } from "../actions/types";
 
 const initialState = {
   isAuthenticated: false,
