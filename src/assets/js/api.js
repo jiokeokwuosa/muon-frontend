@@ -1,6 +1,7 @@
 import axios from "axios";
 const LocalURL = "http://localhost:5000/api/v1/";
 
+/* eslint-disable import/no-anonymous-default-export */
 export default {
   url: LocalURL,
   headers(fileupload = false) {

@@ -26,14 +26,14 @@ To install and run this project you would need to have installed:
 
 To run backend:
 ```
-$ git clone https://github.com/jiokeokwuosa/muon-backend.git
+$ git clone https://github.com/jiokeokwuosa/muon-backend.git or use the local copy
 $ cd muon-backend
 $ npm install
 $ npm run dev
 ```
 To run frontend:
 ```
-$ git clone https://github.com/jiokeokwuosa/muon-frontend.git
+$ git clone https://github.com/jiokeokwuosa/muon-frontend.git or use the local copy
 $ cd muon-frontend
 $ npm install
 $ npm start

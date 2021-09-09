@@ -11,7 +11,7 @@ const Homepage: React.FC =(props:any)=> {
   const mounted = useRef<boolean>(false); 
 
   useEffect(() => {
-    if (!mounted.current) {      
+    if (!mounted.current || !articles.length) {      
       mounted.current = true;
       props.getArticles()    
     }    
