@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, ChangeEvent, MouseEvent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  
   faEdit, faTrash
@@ -7,8 +7,25 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 import { connect } from "react-redux";
 import { articleInputChange, updateComment, getArticles,deleteArticleComment } from '../../redux/actions/articleActions';
 
-const Box = props => { 
-    const {articleInputChange,updateComment,commentUpdateText,getArticles,deleteArticleComment} = props;   
+interface Props{
+    commentUpdateText:string,
+    articleIndex:number,
+    index:number,
+    comment:{
+       text:string,
+       id:string,
+       userId:{
+           fullName:string
+       }
+    },
+    articleInputChange:(name:any, value:any)=>void, 
+    updateComment:(data:object,commentId:string,articleIndex:number, index:number)=>void, 
+    getArticles:()=>void, 
+    deleteArticleComment:(commentId:string)=>void, 
+}
+
+const Box: React.FC<Props> = ({articleInputChange,updateComment,commentUpdateText,getArticles,deleteArticleComment,comment, articleIndex, index}) => {
+  
     const [modal, setModal] = useState(false);
     const [modal2, setModal2] = useState(false);
     const toggle = () => {
@@ -18,12 +35,18 @@ const Box = props => {
         setModal2(!modal2);
     }
 
-    const handleUpdateBox = (e) => {
+    const handleUpdateBox = (e:MouseEvent<HTMLAnchorElement>):void => {
         e.preventDefault()
-        articleInputChange('commentUpdateText', props.comment.text);
+        articleInputChange('commentUpdateText', comment.text);
         setModal(true);
     }
-    const handleChange = (e)=> {
+
+    const handleDeleteBox = (e:MouseEvent<HTMLAnchorElement>)=> {
+        e.preventDefault()
+         toggle2()            
+    }
+
+    const handleChange = (e:ChangeEvent<HTMLTextAreaElement>)=> {
         const target = e.target;
         const name = target.name;
         const value =  target.value;
@@ -34,18 +57,13 @@ const Box = props => {
         const data = {           
             text:commentUpdateText
         }
-        await updateComment(data,props.comment.id,props.articleIndex, props.index)     
+        await updateComment(data,comment.id,articleIndex, index)     
         getArticles() 
         setModal(false);                
-    }
-
-    const handleDeleteBBox = (e)=> {
-        e.preventDefault()
-         toggle2()            
-    }
+    }    
 
     const handleCommentDelete = async()=> {
-        await deleteArticleComment(props.comment.id)  
+        await deleteArticleComment(comment.id)  
         getArticles() 
         setModal2(false);          
     }
@@ -57,19 +75,19 @@ const Box = props => {
                 <img src={`https://source.unsplash.com/random/200x200?sig=${()=>Math.random() * 6}`} alt="comment" className="fullWidth"/> 
             </div>
             <div className="col-md-5">
-                <b>{props.comment.userId.fullName}</b>
+                <b>{comment.userId.fullName}</b>
             </div>
         </div>
         <div className="row">
             <div className="col-md-1"> </div>
             <div className="col-md-8">
-                {props.comment.text}
+                {comment.text}
             </div>
         </div>
         <div className="row controlSection">
             <div className="col-md-1"> </div>
             <div className="col-md-5">
-                <a href="/" onClick={handleUpdateBox}><FontAwesomeIcon icon={faEdit} color="cornflowerblue"/>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;<a  href="/" onClick={handleDeleteBBox}><FontAwesomeIcon icon={faTrash} color="cornflowerblue"/>&nbsp;Delete</a>
+                <a href="/" onClick={handleUpdateBox}><FontAwesomeIcon icon={faEdit} color="cornflowerblue"/>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;<a  href="/" onClick={handleDeleteBox}><FontAwesomeIcon icon={faTrash} color="cornflowerblue"/>&nbsp;Delete</a>
             </div>            
         </div>  
         <Modal isOpen={modal} toggle={toggle} className="trendingModalClass">
@@ -77,7 +95,7 @@ const Box = props => {
             <ModalBody>               
                <div className="row">
                     <div className="col-md-12">
-                        <textarea placeholder="Enter Article" rows="5" name="commentUpdateText"   value={commentUpdateText} required onChange={handleChange}>
+                        <textarea placeholder="Enter Article" rows={5} name="commentUpdateText"   value={commentUpdateText} required onChange={handleChange}>
                             
                         </textarea>           
                     </div>     
@@ -113,7 +131,7 @@ const Box = props => {
         </>
      );
 };
-const mapStateToProps = (state) => ({   
+const mapStateToProps = (state:any) => ({   
     commentUpdateText:  state.article.commentUpdateText  
 });
 

@@ -6,14 +6,24 @@ import { connect } from "react-redux";
 import { getArticles } from '../../../redux/actions/articleActions';
 import PropTypes from "prop-types";
 
-const Homepage: React.FC =(props:any)=> { 
-  const {articles} = props;
+
+interface Props{
+  articles:[{
+    text:string,
+    title:string,
+    userId:object
+  }], 
+  getArticles:()=>void 
+}
+
+
+const Homepage: React.FC<Props> =({articles, getArticles})=> { 
   const mounted = useRef<boolean>(false); 
 
   useEffect(() => {
     if (!mounted.current || !articles.length) {      
       mounted.current = true;
-      props.getArticles()    
+      getArticles()    
     }    
   });
  
