@@ -2,7 +2,7 @@
 
 ## Required Features
 
-- Users can go to page and write a post
+- Users can go to page and write a post.
 - Users should be able to comment on a post 
 - Comments can be edited or deleted. Posts cannot be deleted. 
 - Comments should support nesting (with collapse/expand functionality) 
